@@ -1,13 +1,25 @@
+import { NextPage } from 'next';
+
 import { Layout } from '@/components/layouts'
 import { ProductList } from '@/components/products'
-import { initialData } from '@/database/products';
+import { useProducts } from '@/hooks';
+import { Typography } from '@mui/material';
 
-export default function Home() {
+const HomePage:NextPage = () => {
+  const { products, isLoading } = useProducts('/products');
+
   return (
     <>
-      <Layout title='Home - Zar Ingenieria'>
-        <ProductList products={initialData.products as any}/>
+      <Layout title='Zar Ingeniería S.A.S' pageDescription={'Los mejores productos de la industria de metales'}>
+      <Typography variant='h2' sx={{ mb: 1 }}>Todos los productos</Typography>
+      {
+          isLoading
+          ? <h1>Cargando</h1>
+          : <ProductList products={products}/>
+        }
       </Layout>
     </>
   )
 }
+
+export default HomePage;
