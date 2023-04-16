@@ -12,9 +12,15 @@ export const ProductCard:FC<Props> = ({ product }) => {
 
     const productImage = useMemo(() => {
         return isHovered
-            ? `products/${product.images[1]}`
-            : `products/${product.images[0]}`
-    }, [isHovered, product.images])
+            ? `products/${product.urlImage[1]}`
+            : `products/${product.urlImage[0]}`
+    }, [isHovered, product.urlImage])
+
+    /* const category = useMemo(() => {
+        return product.category === 'iron'
+            ? 'Hierro'
+            : 'Acero'
+    }, [product.category]) */
 
     return (
         <Grid
@@ -25,22 +31,22 @@ export const ProductCard:FC<Props> = ({ product }) => {
             onMouseLeave={() => setIsHovered(false)}
         >
             <Card>
-                <NextLink href={'product/material'} passHref prefetch={false} legacyBehavior>
+                <NextLink href={`product/${product.code}`} passHref prefetch={false} legacyBehavior>
                     <Link>
                         <CardActionArea>
                             <CardMedia
                                 component={'img'}
                                 className={'fadeIn'}
                                 image={productImage}
-                                alt={product.title}
+                                alt={product.name}
                             />
                         </CardActionArea>
                     </Link>
                 </NextLink>
             </Card>
             <Box sx={{ mt: 1 }} className='fadeIn'>
-                <Typography fontWeight={700}>{product.title}</Typography>
-                <Typography fontWeight={500}>{`$${3000}`}</Typography>
+                <Typography fontWeight={700}>{product.name}</Typography>
+                <Typography fontWeight={500}>iron</Typography>
             </Box>
         </Grid>
     )
