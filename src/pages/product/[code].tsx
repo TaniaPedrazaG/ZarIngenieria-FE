@@ -1,4 +1,5 @@
 import { Layout } from "@/components/layouts"
+import { ProductSlideShow } from "@/components/products";
 import { dbProducts } from "@/database";
 import { IProduct } from "@/interfaces";
 import { Grid, Box, Typography, Card, CardActionArea, CardMedia } from '@mui/material';
@@ -14,16 +15,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             <Layout title={product.name} pageDescription={product.description}>
                 <Grid container spacing={ 3 }>
                     <Grid item xs={12} sm={7}>
-                        <Card>
-                            <CardActionArea>
-                                <CardMedia
-                                    component={'img'}
-                                    className={'fadeIn'}
-                                    image={product.urlImage[0]}
-                                    alt={product.name}
-                                />
-                            </CardActionArea>
-                        </Card>
+                        <ProductSlideShow images={product.urlImage}/>
                     </Grid>
                     <Grid item xs={12} sm={5}>
                         <Box display={'flex'} flexDirection={'column'}>

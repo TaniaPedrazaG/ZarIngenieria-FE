@@ -17,11 +17,11 @@ const productSchema = new Schema<IProduct>({
         required: true,
         default: ''
     },
-    urlImage: {
+    urlImage: [{
         type: String,
         required: true,
-    },
-    category: {
+    }],
+    category: [{
         type: String,
         enum: {
             values: ['iron', 'steel'],
@@ -29,8 +29,8 @@ const productSchema = new Schema<IProduct>({
         },
         required: true,
         default: 'iron'
-    },
-    subcategory: {
+    }],
+    subcategory: [{
         type: String,
         enum: {
             values: ['doors', 'windows'],
@@ -38,7 +38,7 @@ const productSchema = new Schema<IProduct>({
         },
         required: true,
         default: 'doors'
-    }
+    }]
 }, {
     timestamps: true
 });

@@ -12,20 +12,14 @@ export const ProductCard:FC<Props> = ({ product }) => {
 
     const productImage = useMemo(() => {
         return isHovered
-            ? `products/${product.urlImage[1]}`
-            : `products/${product.urlImage[0]}`
+            ? product.urlImage[1]
+            : product.urlImage[0];
     }, [isHovered, product.urlImage])
-
-    /* const category = useMemo(() => {
-        return product.category === 'iron'
-            ? 'Hierro'
-            : 'Acero'
-    }, [product.category]) */
 
     return (
         <Grid
             item
-            xs={ 6 }
+            xs={ 12 }
             sm={ 4 }
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
@@ -33,12 +27,22 @@ export const ProductCard:FC<Props> = ({ product }) => {
             <Card>
                 <NextLink href={`product/${product.code}`} passHref prefetch={false} legacyBehavior>
                     <Link>
-                        <CardActionArea>
+                        <CardActionArea
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyItems: 'center',
+                            }}
+                        >
                             <CardMedia
                                 component={'img'}
                                 className={'fadeIn'}
                                 image={productImage}
                                 alt={product.name}
+                                sx={{
+                                    width: { sx: '150px', sm: '300px' },
+                                    height: { sx: '150px', sm: '300px' },
+                                }}
                             />
                         </CardActionArea>
                     </Link>
@@ -46,7 +50,7 @@ export const ProductCard:FC<Props> = ({ product }) => {
             </Card>
             <Box sx={{ mt: 1 }} className='fadeIn'>
                 <Typography fontWeight={700}>{product.name}</Typography>
-                <Typography fontWeight={500}>iron</Typography>
+                <Typography fontWeight={500}>{product.category}</Typography>
             </Box>
         </Grid>
     )

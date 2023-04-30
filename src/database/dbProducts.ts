@@ -1,15 +1,24 @@
+import { isValidObjectId } from 'mongoose';
 import { IProduct } from '@/interfaces';
 import { Product } from '@/models';
 import { db } from '.';
 
 export const getProductByCode = async(code: string): Promise<IProduct | null> => {
+    if (!isValidObjectId) return null;
+
     await db.connect();
     const product = await Product.findOne({code}).lean();
     await db.disconnect();
-    if ( !product ) {
+
+    if (!product) {
         return null;
     }
-    return JSON.parse(JSON.stringify(product) );
+    product.urlImage = product.urlImage.map(image => {
+        console.log('image 1 ', image);
+        return image.includes('http') ? image : `${process.env.HOST_NAME}/products/${image}`
+    })
+
+    return JSON.parse(JSON.stringify(product));
 };
 
 interface ProductCode {
@@ -23,22 +32,15 @@ export const getAllProductCodes = async(): Promise<ProductCode[]> => {
     return codes;
 }
 
-export const getProductsByTerm = async( term: string ): Promise<IProduct[]> => {
-    term = term.toString().toLowerCase();
-
-    await db.connect();
-    const products = await Product.find({ $text: { $search: term } })
-                                    .select('title images price inStock code -_id')
-                                    .lean()
-    await db.disconnect();
-
-    return products;
-}
-
 export const getAllProducts = async (): Promise<IProduct[]> => {
     await db.connect();
     const products = await Product.find().lean();
     await db.disconnect();
-
-    return JSON.parse(JSON.stringify(products));
+    const updatedProducts = products.map(product => {
+        product.urlImage = product.urlImage.map(image => {
+            return image.includes('http') ? image : `${process.env.HOST_NAME}/products/${image}`
+        });
+        return product;
+    })
+    return JSON.parse(JSON.stringify(updatedProducts));
 };

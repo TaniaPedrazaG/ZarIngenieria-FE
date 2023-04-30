@@ -1,12 +1,13 @@
+import { useContext } from "react";
 import NextLink from "next/link"
 import Image from "next/image";
 import { useRouter } from "next/router";
-
-import { AppBar, Badge, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
-import { AdminPanelSettingsOutlined } from "@mui/icons-material";
+import { UiContext } from "@/contexts";
+import { AppBar, Box, IconButton, Link, Toolbar, Typography } from '@mui/material';
+import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 
 export const Navbar = () => {
-    const { asPath } = useRouter();
+    const { toogleSideMenu } = useContext(UiContext)
 
     return (
         <AppBar>
@@ -25,30 +26,9 @@ export const Navbar = () => {
                     </Link>
                 </NextLink>
                 <Box flex={ 1 }/>
-                <Box sx={{ display: { xs: 'none', sm: 'block'} }}>
-                    <NextLink href={'/category/steel'} passHref legacyBehavior>
-                        <Link>
-                            <Button color={asPath === '/category/steel' ? 'primary' : 'info'}>
-                                ACERO
-                            </Button>
-                        </Link>
-                    </NextLink>
-                    <NextLink href={'/category/iron'} passHref legacyBehavior>
-                        <Link>
-                            <Button color={asPath === '/category/iron' ? 'primary' : 'info'}>
-                                HIERRO
-                            </Button>
-                        </Link>
-                    </NextLink>
-                </Box>
-                <Box flex={ 1 }/>
-                <NextLink href={'/admin/'} passHref legacyBehavior>
-                    <Link>
-                    <IconButton>
-                        <AdminPanelSettingsOutlined/>
-                    </IconButton>
-                    </Link>
-                </NextLink>
+                <IconButton onClick={toogleSideMenu}>
+                    <MenuOutlinedIcon color="primary"/>
+                </IconButton>
             </Toolbar>
         </AppBar>
     )
