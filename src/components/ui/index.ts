@@ -1,1 +1,6 @@
+export * from './FilterBy'
+export * from './Footer'
+export * from './LandingInfo'
+export * from './Loading'
 export * from './Navbar'
+export * from './SideMenu'

@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { db, CATEGORY_CONSTANTS } from '@/database';
+import { db, CATEGORY_CONSTANTS, SUBCATEGORY_CONSTANTS } from '@/database';
 import { IProduct } from '@/interfaces';
 import { Product } from '@/models';
 
@@ -18,7 +18,7 @@ export default function handler (req: NextApiRequest, res: NextApiResponse<Data>
 }
 
 const getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
-    const { category = 'all' } = req.query;
+    const { category = 'all', subcategory = 'all' } = req.query;
 
     let condition = {};
 
@@ -26,10 +26,22 @@ const getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
         condition = { category };
     }
 
+    if (subcategory !== 'all' && SUBCATEGORY_CONSTANTS.validCategories.includes(`${subcategory}`)) {
+        condition = { subcategory };
+    }
+
     await db.connect();
     const products = await Product.find(condition)
                                     .lean();
     await db.disconnect();
 
-    return res.status(200).json(products);
+    const updatedProducts = products.map(product => {
+        product.urlImage = product.urlImage.map(image => {
+            console.log('image 5 ', image);
+            return image.includes('http') ? image : `${process.env.HOST_NAME}/products/${image}`
+        });
+        return product;
+    })
+
+    return res.status(200).json(updatedProducts);
 }

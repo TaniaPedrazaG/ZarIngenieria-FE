@@ -1,0 +1,51 @@
+@import "react-slideshow-image/dist/styles.css";
+
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+main {
+    max-width: 1440px;
+    margin: 80px auto;
+    padding: 0px 30px;
+}
+
+footer {
+    background-color: #016891;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    padding: 20px 30px;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}

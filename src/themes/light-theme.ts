@@ -32,7 +32,6 @@ export const lightTheme = createTheme({
                 },
             }
         },
-
         MuiTypography: {
             styleOverrides: {
                 h1: {
@@ -49,7 +48,6 @@ export const lightTheme = createTheme({
                 }
             }
         },
-
         MuiButton: {
             defaultProps: {
                 variant: 'contained',
@@ -69,7 +67,6 @@ export const lightTheme = createTheme({
                 }
             }
         },
-
         MuiCard: {
             defaultProps: {
                 elevation: 0
@@ -80,6 +77,6 @@ export const lightTheme = createTheme({
                     borderRadius: '10px',
                 }
             }
-        }
+        },
     }
 });
