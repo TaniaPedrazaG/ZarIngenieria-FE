@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material"
 
 const Custom404 = () => {
     return (
-        <Layout title={"Page not found"}>
+        <Layout title={"Page not found"} pageDescription={'Page not found'}>
             <Box
                 display={'flex'}
                 justifyContent='center'
