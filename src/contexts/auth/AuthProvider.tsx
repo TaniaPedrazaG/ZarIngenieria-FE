@@ -4,7 +4,7 @@ import { IUser } from '../../interfaces';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { zaringenieriaApi } from '@/api';
+import { zaringenieriaApi } from '@/zarApis';
 import { AuthContext, authReducer } from '.';
 
 export interface AuthState {
