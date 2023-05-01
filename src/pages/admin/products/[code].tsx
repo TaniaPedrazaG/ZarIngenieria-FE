@@ -24,7 +24,7 @@ import {
 import { Product } from '../../../models';
 import { useRouter } from 'next/router';
 import { IProduct } from '@/interfaces';
-import { zaringenieriaApi } from '@/api';
+import { zaringenieriaApi } from '@/zarApis';
 import { dbProducts } from '@/database';
 
 const validCategories = ['iron', 'steel'];
