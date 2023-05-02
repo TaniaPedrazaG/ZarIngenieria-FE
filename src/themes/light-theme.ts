@@ -34,6 +34,9 @@ export const lightTheme = createTheme({
         },
         MuiTypography: {
             styleOverrides: {
+                root: {
+                    fontFamily: ['BasisGrotesqueArabicPro-Regular', 'sans-serif'],
+                },
                 h1: {
                     fontSize: 30,
                     fontWeight: 600
@@ -45,7 +48,7 @@ export const lightTheme = createTheme({
                 subtitle1: {
                     fontSize: 18,
                     fontWeight: 600
-                }
+                },
             }
         },
         MuiButton: {

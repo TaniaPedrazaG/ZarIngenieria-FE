@@ -89,14 +89,14 @@ const createProduct = async (req: NextApiRequest, res: NextApiResponse<Data>) =>
             await db.disconnect();
             return res.status(400).json({ message: 'Ya existe un producto con ese code' })
         }
-        const { name, description, urlImage, category, subCategory } = req.body
+        const { name, description, urlImage, category, subcategory } = req.body
         const product = new Product({
             code: uuid(),
             name,
             description,
             urlImage,
             category,
-            subCategory
+            subcategory
         });
         await product.save();
         await db.disconnect();

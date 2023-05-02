@@ -13,14 +13,8 @@ import {
   Typography,
 } from '@mui/material';
 import {
-  AdminPanelSettings,
   CategoryOutlined,
-  ConfirmationNumberOutlined,
-  DashboardOutlined,
-  EscalatorWarningOutlined,
-  FemaleOutlined,
   LoginOutlined,
-  MaleOutlined,
   VpnKeyOutlined,
   Inventory2Outlined,
 } from '@mui/icons-material';
@@ -74,7 +68,9 @@ export const SideMenu = () => {
           }
 
           <ListItemButton
-            onClick={() => navigateTo('/products')}>
+            sx={{ display: { xs: '', sm: 'none' } }}
+            onClick={() => navigateTo('/products')}
+          >
             <ListItemIcon>
               <CategoryOutlined />
             </ListItemIcon>
@@ -89,7 +85,7 @@ export const SideMenu = () => {
                 <ListItemIcon>
                   <Inventory2Outlined />
                 </ListItemIcon>
-                <ListItemText primary={'Productos'} />
+                <ListItemText primary={'Inventario'} />
               </ListItemButton>
             </>
           )}

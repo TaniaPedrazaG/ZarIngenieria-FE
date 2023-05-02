@@ -3,10 +3,12 @@ import NextLink from "next/link"
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { UiContext } from "@/contexts";
-import { AppBar, Box, IconButton, Link, Toolbar, Typography } from '@mui/material';
+import { AppBar, Box, Button, IconButton, Link, Toolbar, Typography } from '@mui/material';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import { CategoryOutlined } from "@mui/icons-material";
 
 export const Navbar = () => {
+    const { asPath } = useRouter();
     const { toogleSideMenu } = useContext(UiContext)
 
     return (
@@ -26,6 +28,20 @@ export const Navbar = () => {
                     </Link>
                 </NextLink>
                 <Box flex={ 1 }/>
+                <Box
+                    sx={{ display: { xs: 'none', sm: 'block' } }}
+                >
+                    <NextLink href={'/products'} passHref legacyBehavior>
+                        <Link>
+                            <Button
+                                startIcon={<CategoryOutlined/>}
+                                color={asPath === '/products' ? 'primary' : 'info'}
+                            >
+                                Productos
+                            </Button>
+                        </Link>
+                    </NextLink>
+                </Box>
                 <IconButton onClick={toogleSideMenu}>
                     <MenuOutlinedIcon color="primary"/>
                 </IconButton>

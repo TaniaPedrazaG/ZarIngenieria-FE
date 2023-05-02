@@ -1,23 +1,33 @@
 @import "react-slideshow-image/dist/styles.css";
 
-html {
-    min-height: 100%;
-    position: relative;
+@font-face {
+    font-family: "BasisGrotesqueArabicPro-Black";
+    src: local("BasisGrotesqueArabicPro-Black"),
+        url("../assets/BasisGrotesqueArabicPro-Black.ttf") format("truetype");
 }
 
-main {
-    max-width: 1440px;
-    margin: 80px auto;
-    padding: 0px 30px;
+@font-face {
+    font-family: "BasisGrotesqueArabicPro-Bold";
+    src: local("BasisGrotesqueArabicPro-Bold"),
+        url("../assets/BasisGrotesqueArabicPro-Bold.ttf") format("truetype");
 }
 
-footer {
-    background-color: #016891;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    color: white;
-    padding: 20px 30px;
+@font-face {
+    font-family: "BasisGrotesqueArabicPro-Light";
+    src: local("BasisGrotesqueArabicPro-Light"),
+        url("../assets/BasisGrotesqueArabicPro-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "BasisGrotesqueArabicPro-Medium";
+    src: local("BasisGrotesqueArabicPro-Medium"),
+        url("../assets/BasisGrotesqueArabicPro-Medium.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "BasisGrotesqueArabicPro-Regular";
+    src: local("BasisGrotesqueArabicPro-Regular"),
+        url("../assets/BasisGrotesqueArabicPro-Regular.ttf") format("truetype");
 }
 
 @keyframes fadeIn {
@@ -38,6 +48,31 @@ footer {
     100% {
         opacity: 1;
     }
+}
+
+body {
+    font-family: 'BasisGrotesqueArabicPro-Regular', sans-serif;
+    color: #3c3c3c;
+}
+
+html {
+    min-height: 100%;
+    position: relative;
+}
+
+main {
+    max-width: 1440px;
+    margin: 80px auto;
+    padding: 0px 30px;
+}
+
+footer {
+    background-color: #016891;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    padding: 20px 30px;
 }
 
 .fadeIn {

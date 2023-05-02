@@ -3,7 +3,6 @@ import { useSession, signOut } from 'next-auth/react';
 import { IUser } from '../../interfaces';
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import { zaringenieriaApi } from '@/zarApis';
 import { AuthContext, authReducer } from '.';
 
@@ -89,17 +88,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const logout = () => {
-    Cookies.remove('cart');
-    Cookies.remove('firstName');
-    Cookies.remove('lastName');
-    Cookies.remove('address');
-    Cookies.remove('address2');
-    Cookies.remove('zip');
-    Cookies.remove('city');
-    Cookies.remove('country');
-    Cookies.remove('phone');
-
-    signOut();
+    signOut({callbackUrl: '/'});
   };
 
   return (
