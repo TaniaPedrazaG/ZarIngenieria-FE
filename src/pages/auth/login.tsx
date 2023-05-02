@@ -1,96 +1,104 @@
-import { GetServerSideProps } from 'next';
 import { signIn, getSession } from 'next-auth/react';
-import { AuthLayout } from '@/components/layouts'
+import { AuthLayout } from '@/components/layouts';
 import { useForm } from 'react-hook-form';
-import { Box, Grid, Typography, TextField, Button } from '@mui/material';
+import { Box, Grid, Typography, TextField, Button, Chip } from '@mui/material';
 import { validations } from '../../utils';
+import { useState } from 'react';
+import { ErrorOutline } from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
 type FormData = {
-    email: string;
-    password: string;
+  email: string;
+  password: string;
 };
 
 const LoginPage = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-    const onLoginUser = async ({ email, password }: FormData) => {
-        await signIn('credentials', { email, password });
-    };
+  const router = useRouter();
 
-    return (
-        <AuthLayout title={'Ingresar'}>
-            <form onSubmit={handleSubmit(onLoginUser)} noValidate>
-                <Box sx={{ width: 350, padding: '10px 20px'}}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <Typography variant='h1' component='h1'>
-                                Iniciar Sesión
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                type='email'
-                                label={'Correo'}
-                                variant={'filled'}
-                                fullWidth
-                                {...register('email', {
-                                    required: 'Este campo es requerido',
-                                    validate: validations.isEmail,
-                                  })}
-                                  error={!!errors.email}
-                                  helperText={errors.email?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                typeof='password'
-                                label={'Contraseña'}
-                                variant={'filled'}
-                                type={'password'}
-                                fullWidth
-                                {...register('password', {
-                                    required: 'Este campo es requerido',
-                                    minLength: { value: 6, message: 'Mínimo 6 caracteres' },
-                                })}
-                                error={!!errors.password}
-                                helperText={errors.password?.message}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button
-                                type='submit'
-                                color='primary'
-                                className='circular-btn'
-                                size='large'
-                                fullWidth
-                            >
-                                Ingresar
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </Box>
-            </form>
-        </AuthLayout>
-    )
-}
+  const [showError, setShowError] = useState(false);
 
-export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
-    const session = await getSession({ req });
+  const onLoginUser = async ({ email, password }: FormData) => {
+    const response = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
 
-    const { p = '/' } = query;
-
-    if (session) {
-        return {
-            redirect: {
-            destination: p.toString(),
-            permanent: false,
-            },
-        };
+    if (response?.error === 'CredentialsSignin') {
+      setShowError(true);
+    } else {
+      router.push('/');
     }
+  };
 
-    return {
-        props: {},
-    };
+  return (
+    <AuthLayout title={'Ingresar'}>
+      <form onSubmit={handleSubmit(onLoginUser)} noValidate>
+        <Box sx={{ width: 350, padding: '10px 20px' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant='h1' component='h1'>
+                Iniciar Sesión
+              </Typography>
+              <Chip
+                label='No reconocemos ese usuario / contraseña'
+                color='error'
+                icon={<ErrorOutline />}
+                className='fadeIn'
+                sx={{ display: showError ? 'flex' : 'none' }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type='email'
+                label={'Correo'}
+                variant={'filled'}
+                fullWidth
+                {...register('email', {
+                  required: 'Este campo es requerido',
+                  validate: validations.isEmail,
+                })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                typeof='password'
+                label={'Contraseña'}
+                variant={'filled'}
+                type={'password'}
+                fullWidth
+                {...register('password', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+                })}
+                error={!!errors.password}
+                helperText={errors.password?.message}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button
+                type='submit'
+                color='primary'
+                className='circular-btn'
+                size='large'
+                fullWidth
+              >
+                Ingresar
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      </form>
+    </AuthLayout>
+  );
 };
 
-export default LoginPage
+export default LoginPage;
